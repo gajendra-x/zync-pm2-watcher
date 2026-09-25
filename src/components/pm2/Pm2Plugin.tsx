@@ -234,13 +234,13 @@ export function Pm2Plugin({ adapter }: { adapter: Pm2Adapter }) {
 // ---------------- Header ----------------
 function Header(props: {
   host: string;
-  version?: string;
+  version?: string | undefined;
   available: boolean;
   loading: boolean;
   error: Pm2Error | null;
   refreshing: boolean;
   paused: boolean;
-  lastUpdated?: number;
+  lastUpdated?: number | undefined;
   now: number;
   onRefresh: () => void;
   onTogglePause: () => void;
@@ -320,7 +320,7 @@ function SummaryStrip({ counts, filter, setFilter }: { counts: Record<Filter, nu
 }
 
 // ---------------- List ----------------
-function StatusBadge({ status, pending }: { status: Pm2Status; pending?: Pm2Action }) {
+function StatusBadge({ status, pending }: { status: Pm2Status; pending?: Pm2Action | undefined }) {
   if (pending)
     return (
       <span className="inline-flex items-center gap-1 whitespace-nowrap rounded px-1.5 py-0.5 font-mono text-[10.5px] text-info ring-1 ring-info/30">
@@ -465,7 +465,7 @@ function Kv({ k, v, warn }: { k: string; v: string; warn?: boolean }) {
   );
 }
 
-function RowActions({ p, pending, onAction, onLogs }: { p: Pm2Process; pending?: Pm2Action; onAction: (p: Pm2Process, a: Pm2Action) => void; onLogs: (p: Pm2Process) => void }) {
+function RowActions({ p, pending, onAction, onLogs }: { p: Pm2Process; pending?: Pm2Action | undefined; onAction: (p: Pm2Process, a: Pm2Action) => void; onLogs: (p: Pm2Process) => void }) {
   return (
     <div className="flex w-[7.5rem] justify-end gap-0.5" onClick={(e) => e.stopPropagation()}>
       {actionsFor(p).map((a) => {
@@ -511,7 +511,7 @@ function ProcessDetail({
   now: number;
   tab: Tab;
   setTab: (t: Tab) => void;
-  pending?: Pm2Action;
+  pending?: Pm2Action | undefined;
   onAction: (p: Pm2Process, a: Pm2Action) => void;
   onClose: () => void;
   logsExpanded: boolean;
@@ -762,7 +762,7 @@ function StateCard({
   tone: "destructive" | "warning" | "muted";
   title: string;
   text: string;
-  error?: Pm2Error;
+  error?: Pm2Error | undefined;
   children?: React.ReactNode;
 }) {
   const toneCls = { destructive: "text-destructive bg-destructive/10", warning: "text-warning bg-warning/10", muted: "text-muted-foreground bg-muted" }[tone];
@@ -788,7 +788,7 @@ function StateCard({
   );
 }
 
-function Btn({ children, onClick, busy, icon: Icon, primary }: { children: React.ReactNode; onClick: () => void; busy?: boolean; icon: typeof Play; primary?: boolean }) {
+function Btn({ children, onClick, busy, icon: Icon, primary }: { children: React.ReactNode; onClick: () => void; busy?: boolean | undefined; icon: typeof Play; primary?: boolean | undefined }) {
   return (
     <button
       onClick={onClick}

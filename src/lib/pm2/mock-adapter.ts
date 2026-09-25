@@ -43,10 +43,10 @@ const LOG_TEMPLATES: Record<string, { out: string[]; err: string[] }> = {
 
 let logSeq = 1;
 function makeLine(name: string, forceStream?: "stdout" | "stderr"): LogLine {
-  const t = LOG_TEMPLATES[name] ?? LOG_TEMPLATES.default;
+  const t = LOG_TEMPLATES[name] ?? LOG_TEMPLATES["default"]!;
   const stream = forceStream ?? (Math.random() < 0.15 ? "stderr" : "stdout");
   const list = stream === "stdout" ? t.out : t.err;
-  return { id: logSeq++, ts: now(), stream, text: list[Math.floor(Math.random() * list.length)] };
+  return { id: logSeq++, ts: now(), stream, text: list[Math.floor(Math.random() * list.length)] ?? "" };
 }
 
 export function createMockAdapter(scenario: MockScenario): Pm2Adapter {
